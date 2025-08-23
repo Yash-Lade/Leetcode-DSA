@@ -12,26 +12,25 @@ class Solution {
 public:
     ListNode* swapNodes(ListNode* head, int k) {
         ListNode* temp = head;
-        vector<int> arr;
-        // coverting list to array
-        while(temp!=nullptr){
-            arr.push_back(temp->val);
-            temp=temp->next;
+        ListNode* start = head;
+        ListNode* end = head;
+        int cnt = 0;
+        // move start to the front target
+        while(temp!=NULL){
+            cnt++;
+            if(cnt == k)
+            start = temp;
+            temp = temp-> next;
         }
-        int n=arr.size();
-        // Swap elements
-        swap(arr[k-1], arr[n-k]);
+        // move end to last target
+        for(int i=1 ; i<cnt-k+1 ; i++)
+        end = end->next;
+        
+        // just swap the values
+        int val = start->val;
+        start->val = end->val;
+        end->val = val;
 
-        // again creating news list 
-        ListNode* newhead = new ListNode(arr[0]);
-        ListNode* ptr= newhead;
-        temp= newhead;
-        for(int i=1;i<arr.size();i++){
-            ListNode* temp= new ListNode(arr[i]);
-            ptr->next=temp;
-            ptr=temp;
-        }
-        // returned head of new list
-        return newhead;
+        return head;
     }
 };
