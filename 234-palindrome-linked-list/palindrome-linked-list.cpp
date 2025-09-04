@@ -10,21 +10,45 @@
  */
 class Solution {
 public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = nullptr;
+        while (head) {
+            ListNode* nextNode = head->next;
+            head->next = prev;
+            prev = head;
+            head = nextNode;
+        }
+        return prev;
+    }
+
     bool isPalindrome(ListNode* head) {
-        ListNode* temp = head;
-        stack<int> st;
+        if (!head || !head->next) return true;
 
-        while(temp!=NULL){
-            st.push(temp->val);
-            temp = temp->next;
+        // find middle (slow stops at mid for odd, at left-mid for even)
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        temp = head;
-        while(temp!=NULL){
-            if(temp->val!= st.top()) return false;
 
-            temp = temp->next;
-            st.pop();
+        // reverse second half
+        ListNode* secondHead = reverseList(slow);
+        ListNode* first = head;
+        ListNode* second = secondHead;
+
+        bool isPalin = true;
+        while (second) {
+            if (first->val != second->val) {
+                isPalin = false;
+                break;
+            }
+            first = first->next;
+            second = second->next;
         }
-        return true;
+
+        // restore list
+        reverseList(secondHead);
+        return isPalin;
     }
 };
