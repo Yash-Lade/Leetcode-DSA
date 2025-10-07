@@ -33,17 +33,25 @@ public:
     }
     int shipWithinDays(vector<int>& weights, int days) {
         int sumWeight = totalWeight(weights);
-        
         if(days == 1) return sumWeight;
         if(days == 2) return sumWeight/2;
 
-        
-        for(int cap = minCap(weights) ; cap <= sumWeight; cap++){
+        int low = minCap(weights);
+        int high = sumWeight;
+        int ans = -1;
+        while(low <= high){
+            int mid = low + (high - low)/2;
+
+            int daysReq = daysRequired(weights, days, mid);
             
-            int daysNeeded = daysRequired(weights, days, cap);
-            if(daysNeeded <= days)
-            return cap;
+            if(daysReq <= days){
+                ans = mid;
+                high = mid - 1;
+            } 
+            else{
+                low = mid + 1;
+            }
         }
-        return -1;
+        return ans;
     }
 };
