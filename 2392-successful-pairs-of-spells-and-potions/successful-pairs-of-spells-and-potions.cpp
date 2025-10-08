@@ -21,12 +21,30 @@ public:
             } 
 
             // this lower bound return pointer by default so do a substraction to get index
-            int index = lower_bound(potions.begin(), potions.end(), minPotion) - potions.begin(); // minPotion ka  Lowerbound nikalne ke liye
+            // int index = lower_bound(potions.begin(), potions.end(), minPotion) - potions.begin();  minPotion ka  Lowerbound nikalne ke liye
+
+            // Lower Bound using custon function
+            int index = lowerBound(potions, 0, n-1, minPotion);
 
             int count = n - index;
             ans.push_back(count);
         }
         return ans;
+    }
 
+    int lowerBound(vector<int>& potions, int low, int high, int minPotion){
+
+        int ans = low;
+        while(low <= high){
+
+            int mid = low + (high - low)/2;
+            if(potions[mid] >= minPotion){
+                ans = mid;
+                high = mid - 1;
+            }
+            else
+            low = mid + 1;
+        }
+        return ans;
     }
 };
