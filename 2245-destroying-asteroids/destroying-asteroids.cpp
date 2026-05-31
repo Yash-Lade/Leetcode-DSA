@@ -2,7 +2,7 @@ class Solution {
 public:
     bool asteroidsDestroyed(int mass, vector<int>& asteroids) {
         
-        bool canDestroy = false;
+        bool canDestroyed = false;
         sort(asteroids.begin(), asteroids.end());
         long long totalMass = mass;
 
@@ -11,12 +11,13 @@ public:
             if(aestroid <= totalMass)
             {
                 totalMass += aestroid;
-                canDestroy = true;
+                canDestroyed = true;
             }
-            else canDestroy = false;
+            else canDestroyed = false;
             
-            if(!canDestroy) return false;
+            if(!canDestroyed) return false;
         }
+        
         return true;
     }
 };
