@@ -14,30 +14,34 @@ public:
         
         ListNode* slow = head;
         ListNode* fast = head;
-        
-        vector<int> arr1;
-        vector<int> arr2;
-
+        // traverse the half list
         while(fast != nullptr && fast->next != nullptr){
-            arr1.push_back(slow->val);
-            slow = slow->next;
+            slow= slow->next;
             fast = fast->next->next;
         }
 
-        while(slow != nullptr){
-            arr2.push_back(slow->val);
-            slow = slow->next;
-        }
+        // reverse list 
+        ListNode* prev = nullptr;
+        ListNode* temp = slow;
 
-        reverse(arr2.begin(), arr2.end());
+        while(temp != nullptr){
+            ListNode* nextTemp = temp->next;
+            temp->next = prev;
+            prev = temp;
+            temp = nextTemp;
+        }
+        ListNode* first = head; // first list head
+        ListNode* second = prev; // second list head
+
         int maxSum = 0;
+        while(second != nullptr ){
+            int currSum = first->val + second->val;
+            if(maxSum < currSum) maxSum = currSum;
 
-        for(int i = 0; i<arr1.size(); i++)
-        {   
-            int currSum =  arr1[i] + arr2[i];
-            if(maxSum < currSum) 
-            maxSum = currSum;
+            first = first->next;
+            second = second->next;
         }
+
         return maxSum;
     }
 };
