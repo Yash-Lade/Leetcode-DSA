@@ -7,9 +7,7 @@ public:
         for(auto c : text){
             if(c == 'b' || c == 'a' || c == 'l' || c == 'o' || c == 'n')
             mpp[c]++;
-        }
-        int instances = 0;
-        
+        }      
         int maxBalloons = min({
             mpp['b'],
             mpp['a'],
